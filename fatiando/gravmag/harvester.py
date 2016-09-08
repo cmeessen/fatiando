@@ -221,7 +221,7 @@ def _find_index(point, mesh):
 
 
 def harvest(data, seeds, mesh, compactness, threshold, report=False,
-            restrict=[]):
+            restrict=None):
     """
     Run the inversion algorithm and produce an estimate physical property
     distribution (density and/or magnetization).
@@ -265,9 +265,9 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
                       'misfit': data_misfit_value,
                       'regularizer': regularizing_function_value,
                       'accretions': number_of_accretions}
-    * restrict : str list
-        Use this to restrict growth in certain directions. Directions are
-        *above*, *below*, *front*, *back*, *left* and *right*.
+    * restrict : list of str
+        Restricts seed growth in certain directions. Directions are *above*,
+        *below*, *front*, *back*, *left* and *right*.
 
     Returns:
 
@@ -326,7 +326,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     return output
 
 
-def iharvest(data, seeds, mesh, compactness, threshold, restrict):
+def iharvest(data, seeds, mesh, compactness, threshold, restrict=None):
     """
     Same as the :func:`fatiando.gravmag.harvester.harvest` function but this
     one returns an iterator that yields the information of each accretion.
@@ -462,7 +462,7 @@ def _misfitfunc(data, predicted):
     return result
 
 
-def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict):
+def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict=False):
     """
     Return a dict with the new neighbors of cell.
     keys are the index of the neighbors in the mesh. values are the Neighbor
@@ -532,10 +532,12 @@ def _is_neighbor(index, props, neighborhood):
     return False
 
 
-def _neighbor_indexes(n, mesh, restrict):
+def _neighbor_indexes(n, mesh, restrict=None):
     """Find the indexes of the neighbors of n"""
     nz, ny, nx = mesh.shape
     indexes = []
+    if restrict is None:
+        restrict = []
     if 'above' not in restrict:
         # The guy above
         tmp = n - nx * ny
