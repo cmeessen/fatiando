@@ -266,7 +266,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
                       'regularizer': regularizing_function_value,
                       'accretions': number_of_accretions}
     * restrict : list of str
-        Restricts seed growth in given directions. Possible directions are 
+        Restricts seed growth in given directions. Possible directions are
         ``'above'``, ``'below'``, ``'front'``, ``'back'``, ``'left'`` and
         ``'right'``.
 
