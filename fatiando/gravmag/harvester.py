@@ -268,7 +268,8 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     * restrict : list of str
         Restricts seed growth in given directions. Possible directions are
         ``'above'``, ``'below'``, ``'front'``, ``'back'``, ``'left'`` and
-        ``'right'``.
+        ``'right'``. You can pass in multiple directions as a list, e.g.
+        ``['above', 'front']``. Default is ``None`` for unrestricted growth.
 
     Returns:
 
@@ -327,7 +328,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     return output
 
 
-def iharvest(data, seeds, mesh, compactness, threshold, restrict=None):
+def iharvest(data, seeds, mesh, compactness, threshold, restrict):
     """
     Same as the :func:`fatiando.gravmag.harvester.harvest` function but this
     one returns an iterator that yields the information of each accretion.
@@ -463,7 +464,7 @@ def _misfitfunc(data, predicted):
     return result
 
 
-def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict=False):
+def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict):
     """
     Return a dict with the new neighbors of cell.
     keys are the index of the neighbors in the mesh. values are the Neighbor
@@ -533,7 +534,7 @@ def _is_neighbor(index, props, neighborhood):
     return False
 
 
-def _neighbor_indexes(n, mesh, restrict=None):
+def _neighbor_indexes(n, mesh, restrict):
     """Find the indexes of the neighbors of n"""
     nz, ny, nx = mesh.shape
     indexes = []
