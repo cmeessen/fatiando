@@ -266,9 +266,10 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
                       'regularizer': regularizing_function_value,
                       'accretions': number_of_accretions}
     * restrict : list of str
-        Restricts seed growth in given directions. Possible directions are 
-        ``'above'``, ``'below'``, ``'front'``, ``'back'``, ``'left'`` and
-        ``'right'``.
+        Restricts seed growth in given directions. Possible directions are
+        ``'above'``, ``'below'``, ``'north'``, ``'south'``, ``'east'`` and
+        ``'west'``. You can pass in multiple directions as a list, e.g.
+        ``['above', 'north']``. Default is ``None`` for unrestricted growth.
 
     Returns:
 
@@ -327,7 +328,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     return output
 
 
-def iharvest(data, seeds, mesh, compactness, threshold, restrict=None):
+def iharvest(data, seeds, mesh, compactness, threshold, restrict):
     """
     Same as the :func:`fatiando.gravmag.harvester.harvest` function but this
     one returns an iterator that yields the information of each accretion.
@@ -463,7 +464,7 @@ def _misfitfunc(data, predicted):
     return result
 
 
-def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict=False):
+def _get_neighbors(cell, neighborhood, estimate, mesh, data, restrict):
     """
     Return a dict with the new neighbors of cell.
     keys are the index of the neighbors in the mesh. values are the Neighbor
@@ -533,7 +534,7 @@ def _is_neighbor(index, props, neighborhood):
     return False
 
 
-def _neighbor_indexes(n, mesh, restrict=None):
+def _neighbor_indexes(n, mesh, restrict):
     """Find the indexes of the neighbors of n"""
     nz, ny, nx = mesh.shape
     indexes = []
@@ -549,23 +550,23 @@ def _neighbor_indexes(n, mesh, restrict=None):
         tmp = n + nx * ny
         if tmp < mesh.size:
             indexes.append(tmp)
-    if 'front' not in restrict:
-        # The guy in front
+    if 'north' not in restrict:
+        # The guy in front/north
         tmp = n + 1
         if n % nx < nx - 1:
             indexes.append(tmp)
-    if 'back' not in restrict:
-        # The guy in the back
+    if 'south' not in restrict:
+        # The guy in the back/south
         tmp = n - 1
         if n % nx != 0:
             indexes.append(tmp)
-    if 'left' not in restrict:
-        # The guy to the left
+    if 'east' not in restrict:
+        # The guy to the left/east
         tmp = n + nx
         if n % (nx * ny) < nx * (ny - 1):
             indexes.append(tmp)
-    if 'right' not in restrict:
-        # The guy to the right
+    if 'west' not in restrict:
+        # The guy to the right/west
         tmp = n - nx
         if n % (nx * ny) >= nx:
             indexes.append(tmp)
