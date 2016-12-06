@@ -13,9 +13,9 @@ Documentation (version |version|)
             </em>
         </div>
         <div class="col-md-3">
-            <h3><a href="api/fatiando.html">Library reference</a></h3>
+            <h3><a href="api/fatiando.html">API Reference</a></h3>
             <em>
-            The modules and packages of the
+            Documentation for all classes and functions in the
             <code class="docutils literal">fatiando</code> package.
             </em>
         </div>
@@ -27,17 +27,26 @@ Documentation (version |version|)
             </em>
         </div>
         <div class="col-md-3">
-            <h3><a href="cookbook.html">Cookbook</a></h3>
+            <h3><a href="develop.html">Developer Guide</a></h3>
             <em>
-            Recipes showing how to use our modules and functions.
+            <strong>Get involved!</strong> See these instructions for
+            contributing to Fatiando.
             </em>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <h3><a href="develop.html">Developer Guide</a></h3>
+            <h3><a href="cite.html">Citing</a></h3>
             <em>
-            Get involved! See these instructions for contributing to Fatiando.
+            Fatiando is research software <strong>made by scientists</strong>.
+            See how to cite it in your publications.
+            </em>
+        </div>
+        <div class="col-md-3">
+            <h3><a href="use_cases.html">Use Cases</a></h3>
+            <em>
+            How Fatiando is being used in the wild: publications, teaching,
+            etc. Add yours to the list!
             </em>
         </div>
         <div class="col-md-3">
@@ -52,13 +61,6 @@ Documentation (version |version|)
             List of changes for each release.
             </em>
         </div>
-        <div class="col-md-3">
-            <h3><a href="cite.html">Citing</a></h3>
-            <em>
-            Fatiando is research software <strong>made by scientists</strong>.
-            See how to cite it in your publications.
-            </em>
-        </div>
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -67,13 +69,20 @@ Documentation (version |version|)
             Our open-source license (BSD 3-clause).
             </em>
         </div>
+        <div class="col-md-3">
+            <h3><a href="cookbook.html">Cookbook</a></h3>
+            <em>
+            Recipes showing how to use our modules and functions.
+            </em>
+        </div>
     </div>
 
 Other versions
 --------------
 
 * `Development version <http://www.fatiando.org/dev>`__
-* `Version 0.4 (stable) <http://www.fatiando.org>`__
+* `Version 0.5 (stable) <http://www.fatiando.org/v0.5>`__
+* `Version 0.4 <http://www.fatiando.org/v0.4>`__
 * `Version 0.3 <http://www.fatiando.org/v0.3>`__
 * `Version 0.2 <http://www.fatiando.org/v0.2>`__
 * `Version 0.1 <http://www.fatiando.org/v0.1>`__

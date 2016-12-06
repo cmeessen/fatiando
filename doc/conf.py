@@ -23,15 +23,15 @@ extensions = [
     'sphinx_gallery.gen_gallery',
 ]
 
-from mayavi import mlab
-mlab.options.offscreen = True
+# Produce pages for each class and function
+autosummary_generate = True
+autodoc_default_flags = ['members', 'inherited-members']
 
 # Configure the sphinx-gallery plugin
 sphinx_gallery_conf = {
     'examples_dirs': ['../gallery'],
     'gallery_dirs': ['gallery'],
     'filename_pattern': os.sep + '*', # Match any .py file
-    'find_mayavi_figures': True,
 }
 
 # Configure the inline plots from matplotlib plot_directive
@@ -84,6 +84,7 @@ html_sidebars = {
     'changelog': ['localtoc.html'],
     'api/**': ['localtoc.html'],
     'gallery/index': ['localtoc.html'],
+    'use_cases': ['localtoc.html'],
      }
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -117,13 +118,12 @@ html_theme_options = {
     'navbar_title': 'fatiando',
     'navbar_site_name': "Site",
     'navbar_links': [
-        ("Installing", "install"),
-        ("Documentation", "docs"),
-        ("Cookbook", "cookbook"),
+        ("Install", "install"),
         ("Gallery", "gallery/index"),
-        ("Developer Guide", "develop"),
-        ('<i class="fa fa-github-square fa-lg" title="Source code on Github"></i>',
-            "https://github.com/fatiando/fatiando", True),
+        # ("Tutorials", ""),
+        ("API", "api/fatiando"),
+        ("Docs", "docs"),
+        ("Contribute", "develop"),
     ],
     # Render the next and previous page links in navbar. (Default: true)
     'navbar_sidebarrel': False,
