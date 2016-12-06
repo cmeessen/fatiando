@@ -267,9 +267,9 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
                       'accretions': number_of_accretions}
     * restrict : list of str
         Restricts seed growth in given directions. Possible directions are
-        ``'above'``, ``'below'``, ``'front'``, ``'back'``, ``'left'`` and
-        ``'right'``. You can pass in multiple directions as a list, e.g.
-        ``['above', 'front']``. Default is ``None`` for unrestricted growth.
+        ``'above'``, ``'below'``, ``'north'``, ``'south'``, ``'east'`` and
+        ``'west'``. You can pass in multiple directions as a list, e.g.
+        ``['above', 'north']``. Default is ``None`` for unrestricted growth.
 
     Returns:
 
@@ -550,23 +550,23 @@ def _neighbor_indexes(n, mesh, restrict):
         tmp = n + nx * ny
         if tmp < mesh.size:
             indexes.append(tmp)
-    if 'front' not in restrict:
-        # The guy in front
+    if 'north' not in restrict:
+        # The guy in front/north
         tmp = n + 1
         if n % nx < nx - 1:
             indexes.append(tmp)
-    if 'back' not in restrict:
-        # The guy in the back
+    if 'south' not in restrict:
+        # The guy in the back/south
         tmp = n - 1
         if n % nx != 0:
             indexes.append(tmp)
-    if 'left' not in restrict:
-        # The guy to the left
+    if 'east' not in restrict:
+        # The guy to the left/east
         tmp = n + nx
         if n % (nx * ny) < nx * (ny - 1):
             indexes.append(tmp)
-    if 'right' not in restrict:
-        # The guy to the right
+    if 'west' not in restrict:
+        # The guy to the right/west
         tmp = n - nx
         if n % (nx * ny) >= nx:
             indexes.append(tmp)

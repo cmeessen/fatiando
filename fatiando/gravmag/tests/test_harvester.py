@@ -6,17 +6,17 @@ from fatiando import gridder
 
 def test_harvest_restrict():
     def fill(i, case):
-        cdir = {'above': 4, 'below': 22, 'front': 14, 'back': 12, 'left': 16,
-                'right': 10}
+        # Returns density of 10 for center prism and prism given by 'case'
+        cdir = {'above': 4, 'below': 22, 'north': 14, 'south': 12, 'east': 16,
+                'west': 10}
         if i == 13:
             return 10
         for key in cdir:
             if case == key and i == cdir.get(key):
                 return 10
         return 0
-    # The test cases as string list. First entry: placement of reference prisms
-    # second entry: direction of restriction
-    cases = ['above', 'below', 'front', 'back', 'left', 'right']
+    # The test cases as string list
+    cases = ['above', 'below', 'north', 'south', 'east', 'west']
     # Create reference model
     bounds = (0, 3, 0, 3, 0, 3)
     shape = (3, 3, 3)
