@@ -29,8 +29,6 @@ Wrappers for calls to Mayavi2's `mlab` module for plotting
 * :func:`~fatiando.vis.myv.continents`
 * :func:`~fatiando.vis.myv.meridians`
 * :func:`~fatiando.vis.myv.parallels`
-* :func:`~fatiando.vis.myv.surf`
-* :func:`~fatiando.vis.myv.cbar`
 
 **Helpers**
 
@@ -1024,98 +1022,3 @@ def parallels(latitudes, color=(0, 0, 0), linewidth=1, opacity=1):
         lines.actor.property.line_width = linewidth
         parallels.append(lines)
     return parallels
-
-
-def surf(data, drawZ=0., scaleZ=1, cmap='jet', contour=None,
-         col=None):
-    """
-    Plot 2D data in 3D, e.g. a gravity field. If contour is defined, a
-    contour_surf object will be returned.
-
-    Parameters:
-
-    * data : numpy array or tuple = (x, y, z)
-        Array of shape (nPoints, 3) containing x, y, z information or tuple
-        containing three numpy arrays x, y and z of shape (nPoints,).
-    * drawZ : float
-        Altitude where surface will be displayed in the 3D plot
-    * scaleZ : float
-        Exaggaration factor for plotted surface.
-    * cmap : string
-        Mayavi compatible color map
-    * contours : Int or list
-        Specifies number or list of contours. Output are only contours.
-    * color : tuple = (r, g, b)
-        Color of the object. Overrides cmap if defined
-
-    Return:
-
-    * Ssurf : Mayavi surf or contour_surf object
-        The surface to be shown in 3D
-    """
-    _lazy_import_mlab()
-    if type(data) is tuple and len(data) == 3:
-        if data[0].size == data[1].size and data[1].size == data[2].size:
-            dataArr = numpy.zeros([data[0].size, 3])
-            dataArr[:, 0] = data[0]
-            dataArr[:, 1] = data[1]
-            dataArr[:, 2] = data[2]
-            data = dataArr
-        else:
-            raise ValueError('Input arrays have different lengths.')
-    if type(data) is numpy.ndarray and data.shape[1] == 3:
-        dataView = data.view('f8, f8, f8')
-        data = numpy.sort(dataView, order=['f0', 'f1'], axis=0)
-        data = data.view(numpy.float)
-    else:
-        raise ValueError('Input data has not the correct shape.')
-    nx = numpy.unique(data[:, 0]).size
-    ny = numpy.unique(data[:, 1]).size
-    xmin = data[:, 0].min()
-    xmax = data[:, 0].max()
-    ymin = data[:, 1].min()
-    ymax = data[:, 1].max()
-    dx = (xmax - xmin)/float(nx - 1)
-    dy = (ymax - ymin)/float(ny - 1)
-    xarr, yarr = numpy.mgrid[xmin:xmax:dx, ymin:ymax:dy]
-    prop = data[:, 2].reshape(nx, ny)
-    if contour is None:
-        Ssurf = mlab.surf(xarr, yarr, prop*scaleZ + drawZ, colormap=cmap,
-                          color=col)
-    else:
-        Ssurf = mlab.contour_surf(xarr, yarr, prop*scaleZ + drawZ,
-                                  colormap=cmap, contours=contour, color=col)
-    return Ssurf
-
-
-def cbar(object=None, title=None, orientation=None, nb_labels=None,
-         nb_colors=None, label_fmt=None):
-    """
-    Return a mlab.colorbar.
-
-    Parameters:
-
-    * object : object
-        Optional object to get the color map from
-    * title : string
-        Title string
-    * orientation : string
-        'horizontal' or 'vertical'
-    * nb_labels : integer
-        Number of labels to display on the colorbar
-    * nb_colors : integer
-        Maximum number of colors displayed on the colorbar
-    * label_fmt : string
-        String formatter for the labels.
-
-    Returns:
-
-    * colorbar : colorbar
-        Mayavi mlab colorbar
-    """
-    _lazy_import_mlab()
-    colorbar = mlab.colorbar(object=object, title=title, nb_labels=nb_labels,
-                             orientation=orientation, nb_colors=nb_colors,
-                             label_fmt=label_fmt)
-    colorbar.label_text_property.color = (0., 0., 0.)
-    return colorbar
