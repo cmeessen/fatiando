@@ -581,10 +581,10 @@ def _test_restriction(restrict):
     """
     cases = ['above', 'below', 'north', 'south', 'east', 'west']
     for case in restrict:
-        if not case in cases:
+        if not(case in cases):
             raise ValueError("Unrecognized item in restrict: %s" % case)
     return True
-    
+
 
 class PrismSeed(Prism):
 
