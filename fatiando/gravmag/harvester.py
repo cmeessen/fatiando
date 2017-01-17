@@ -314,6 +314,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
 
 
     """
+    _test_restriction(restrict)
     for accretions, update in enumerate(iharvest(data, seeds, mesh,
                                                  compactness, threshold,
                                                  restrict)):
@@ -573,6 +574,17 @@ def _neighbor_indexes(n, mesh, restrict):
     # Filter out the ones that do not exist or are masked (topography)
     return [i for i in indexes if i is not None and mesh[i] is not None]
 
+
+def _test_restriction(restrict):
+    """
+    Test for correct spelling of items in restrict list.
+    """
+    cases = ['above', 'below', 'north', 'south', 'east', 'west']
+    for case in restrict:
+        if not case in cases:
+            raise ValueError("Unrecognized item in restrict: %s" % case)
+    return True
+    
 
 class PrismSeed(Prism):
 
