@@ -579,7 +579,7 @@ def _test_restriction(restrict):
     """
     Test for correct spelling of items in restrict list.
     """
-    if not restrict is None:
+    if restrict is not None:
         cases = ['above', 'below', 'north', 'south', 'east', 'west']
         for case in restrict:
             if not(case in cases):
