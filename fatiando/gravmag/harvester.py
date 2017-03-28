@@ -579,10 +579,11 @@ def _test_restriction(restrict):
     """
     Test for correct spelling of items in restrict list.
     """
-    cases = ['above', 'below', 'north', 'south', 'east', 'west']
-    for case in restrict:
-        if not(case in cases):
-            raise ValueError("Unrecognized item in restrict: %s" % case)
+    if not restrict is None:
+        cases = ['above', 'below', 'north', 'south', 'east', 'west']
+        for case in restrict:
+            if not(case in cases):
+                raise ValueError("Unrecognized item in restrict: %s" % case)
     return True
 
 
