@@ -21,7 +21,8 @@ def test_harvest_restrict():
     bounds = (0, 3, 0, 3, 0, 3)
     shape = (3, 3, 3)
     shapegz = (10, 10)
-    # First test - Test whether restriction works
+    # First test
+    # Test whether restriction works
     for testcase in cases:
         mref = PrismMesh(bounds, shape)
         mesh = mref.copy()
@@ -51,29 +52,22 @@ def test_harvest_restrict():
             l1.append(p.props['density'] == mref[i].props['density'])
         assert not np.all(l0)
         assert np.all(l1)
-    # Second test - Test whether detection of spelling errors in restric works
-    mref = PrismMesh(bounds, shape)
-    mesh = mref.copy()
-    mref.addprop('density', [fill(i, 'above') for i in xrange(mref.size)])
-    # Calculate reference gravity field
-    xp, yp, zp = gridder.regular(bounds[:4], shapegz, z=-1)
-    gzref = prism.gz(xp, yp, zp, mref)
-    # Initiate harvester
-    hgref = [harvester.Gz(xp, yp, zp, gzref)]
-    loc = [[1.5, 1.5, 1.5, {'density': 10}]]
-    seeds = harvester.sow(loc, mesh)
-    # est0 should return a value error because it contains a misspelled case
-    l2 = [False]
-    l3 = [True]
+    # Second test
+    # Test whether detection of spelling errors in restric works
+    l2 = False
+    l3 = False
+    # Wrong argument, should return ValueError
     try:
         est0, pred0 = harvester.harvest(hgref, seeds, mesh, compactness=0.1,
                                         threshold=0.001, restrict=['abve'])
     except ValueError:
-        l2 = [True]
+        l2 = True
+    # Third test
+    # Test detection that argument is not a list, should return TypeError
     try:
-        est1, pred1 = harvester.harvest(hgref, seeds, mesh, compactness=0.1,
-                                        threshold=0.001, restrict=['above'])
-    except ValueError:
-        l3 = [False]
-    assert np.all(l2)
-    assert np.all(l3)
+        est0, pred0 = harvester.harvest(hgref, seeds, mesh, compactness=0.1,
+                                        threshold=0.001, restrict='above')
+    except TypeError:
+        l3 = True
+    assert l2
+    assert l3
