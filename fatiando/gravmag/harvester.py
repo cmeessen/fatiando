@@ -221,7 +221,7 @@ def _find_index(point, mesh):
 
 
 def harvest(data, seeds, mesh, compactness, threshold, report=False,
-            restrict=None):
+            restrict=[None]):
     """
     Run the inversion algorithm and produce an estimate physical property
     distribution (density and/or magnetization).
@@ -579,11 +579,13 @@ def _test_restriction(restrict):
     """
     Test for correct spelling of items in restrict list.
     """
-    if restrict is not None:
-        cases = ['above', 'below', 'north', 'south', 'east', 'west']
+    cases = ['above', 'below', 'north', 'south', 'east', 'west', None]
+    if type(restrict) is list:
         for case in restrict:
             if not(case in cases):
                 raise ValueError("Unrecognized item in restrict: %s" % case)
+    else:
+        raise TypeError("Argument restrict is not a list.")
     return True
 
 
