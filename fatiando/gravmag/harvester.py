@@ -268,8 +268,8 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     * restrict : list of str
         Restricts seed growth in given directions. Possible directions are
         ``'above'``, ``'below'``, ``'north'``, ``'south'``, ``'east'`` and
-        ``'west'``. You can pass in multiple directions as a list, e.g.
-        ``['above', 'north']``. Default is ``None`` for unrestricted growth.
+        ``'west'``. You can pass one or more directions as a list, e.g.
+        ``['above', 'north']``. Default is ``[None]`` for unrestricted growth.
 
     Returns:
 
