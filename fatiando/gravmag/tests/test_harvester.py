@@ -63,11 +63,11 @@ def test_harvest_restrict():
     except ValueError:
         l2 = True
     # Third test
-    # Test detection that argument is not a list, should return TypeError
+    # Inserting a string shoudl return the same ValueError
     try:
         est0, pred0 = harvester.harvest(hgref, seeds, mesh, compactness=0.1,
                                         threshold=0.001, restrict='above')
-    except TypeError:
+    except ValueError:
         l3 = True
     assert l2
     assert l3
