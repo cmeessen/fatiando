@@ -63,7 +63,7 @@ def test_harvest_restrict():
     except ValueError:
         l2 = True
     # Third test
-    # Inserting a string shoudl return the same ValueError
+    # Inserting a string should return the same ValueError
     try:
         est0, pred0 = harvester.harvest(hgref, seeds, mesh, compactness=0.1,
                                         threshold=0.001, restrict='above')
