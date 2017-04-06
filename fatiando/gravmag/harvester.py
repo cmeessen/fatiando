@@ -221,7 +221,7 @@ def _find_index(point, mesh):
 
 
 def harvest(data, seeds, mesh, compactness, threshold, report=False,
-            restrict=[None]):
+            restrict=None):
     """
     Run the inversion algorithm and produce an estimate physical property
     distribution (density and/or magnetization).
@@ -268,8 +268,8 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
     * restrict : list of str
         Restricts seed growth in given directions. Possible directions are
         ``'above'``, ``'below'``, ``'north'``, ``'south'``, ``'east'`` and
-        ``'west'``. You can pass one or more directions as a list, e.g.
-        ``['above', 'north']``. Default is ``[None]`` for unrestricted growth.
+        ``'west'``. You can pass in one or directions as a list, e.g.
+        ``['above']``. Default is ``None`` for unrestricted growth.
 
     Returns:
 
@@ -314,7 +314,7 @@ def harvest(data, seeds, mesh, compactness, threshold, report=False,
 
 
     """
-    _test_restriction(restrict)
+    restrict = _test_restriction(restrict)
     for accretions, update in enumerate(iharvest(data, seeds, mesh,
                                                  compactness, threshold,
                                                  restrict)):
@@ -539,8 +539,6 @@ def _neighbor_indexes(n, mesh, restrict):
     """Find the indexes of the neighbors of n"""
     nz, ny, nx = mesh.shape
     indexes = []
-    if restrict is None:
-        restrict = []
     if 'above' not in restrict:
         # The guy above
         tmp = n - nx * ny
@@ -579,14 +577,14 @@ def _test_restriction(restrict):
     """
     Test for correct spelling of items in restrict list.
     """
-    cases = ['above', 'below', 'north', 'south', 'east', 'west', None]
-    if type(restrict) is list:
+    cases = ['above', 'below', 'north', 'south', 'east', 'west']
+    if restrict is None:
+        return []
+    else:
         for case in restrict:
             if not(case in cases):
                 raise ValueError("Unrecognized item in restrict: %s" % case)
-    else:
-        raise TypeError("Argument restrict is not a list.")
-    return True
+    return restrict
 
 
 class PrismSeed(Prism):
